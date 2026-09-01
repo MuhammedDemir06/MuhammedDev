@@ -2,37 +2,61 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Muhammed Demir</title>
+
+  <!-- Favicon: repo'na bir favicon.png/ico koy ve yolunu buraya yaz -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <meta property="og:title" content="Muhammed Demir - Game Developer">
+  <meta property="og:description" content="Unity Game Developer">
+  <meta property="og:image" content="preview.png">
+  <meta property="og:type" content="website">
+  <meta name="description" content="Muhammed Demir's personal portfolio website - games, projects, and links.">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="panel">
-    <h1 class="name">Muhammed Demir</h1>
+    <button class="about-button" onclick="toggleAbout(true)">About</button>
+
+    <h1 class="name" id="nameTitle"></h1>
     <div class="sections">
       <div class="section active" onclick="showPanel('games', this)">Published Games</div>
       <div class="section" onclick="showPanel('links', this)">Links</div>
       <div class="section" onclick="showPanel('works', this)">Works</div>
     </div>
 
- <div class="content" id="games">
-  <h2>Published Games</h2>
+    <div class="content" id="games">
+      <h2>Published Games</h2>
 
-  <div class="game-card">
-    <a href="https://store.steampowered.com/app/3387660/Codebound/" target="_blank" class="game-title">Codebound</a>
-    <p class="game-desc">Codebound, A simple 2D pixel art platformer with a story.(Steam Project)</p>
-  </div>
-</div>
+      <div class="game-card">
+        <a href="https://store.steampowered.com/app/3387660/Codebound/" target="_blank" class="game-title">Codebound</a>
+        <p class="game-desc">Codebound, A simple 2D pixel art platformer with a story. (Steam Project)</p>
+      </div>
+    </div>
 
     <div class="content" id="links" style="display:none;">
       <h2>Links</h2>
-      <a href="https://github.com/MuhammedDemir06" class="item-button">GitHub</a>
-      <a href="https://www.linkedin.com/in/muhammed-demir-945625311" class="item-button">LinkedIn</a>
-      <a href="https://www.youtube.com/@InverseMaple/videos class=" class = "item-button">Youtube</a>
+      <a href="https://github.com/MuhammedDemir06" class="item-button" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/muhammed-demir-945625311" class="item-button" target="_blank">LinkedIn</a>
+      <a href="https://www.youtube.com/@InverseMaple/videos" class="item-button" target="_blank">Youtube</a>
     </div>
 
     <div class="content" id="works" style="display:none;">
       <h2>Works</h2>
-      <a href="https://github.com/MuhammedDemir06/Iron-Tools" class="item-button">Unity Iron Tools Framework (Github)</a>
+      <a href="https://github.com/MuhammedDemir06/Iron-Tools" class="item-button" target="_blank">Unity Iron Tools Framework (Github)</a>
+    </div>
+  </div>
+
+  <!-- About modal -->
+  <div class="about-overlay" id="aboutOverlay" onclick="closeIfOverlay(event)">
+    <div class="about-modal">
+      <h2>About Me</h2>
+      <p>
+        Game Developer with 3+ Years of Experience in Unity
+      </p>
+      <button class="about-close" onclick="toggleAbout(false)">Kapat</button>
     </div>
   </div>
 
@@ -40,12 +64,55 @@
     function showPanel(panelId, clickedButton) {
       const panels = document.querySelectorAll('.content');
       panels.forEach(p => p.style.display = 'none');
-      document.getElementById(panelId).style.display = 'block';
+
+      const target = document.getElementById(panelId);
+      target.style.display = 'flex';
+
+      target.classList.remove('content-enter');
+      void target.offsetWidth;
+      target.classList.add('content-enter');
 
       const buttons = document.querySelectorAll('.section');
       buttons.forEach(b => b.classList.remove('active'));
       clickedButton.classList.add('active');
     }
+
+    function toggleAbout(open) {
+      const overlay = document.getElementById('aboutOverlay');
+      if (open) {
+        overlay.classList.add('open');
+      } else {
+        overlay.classList.remove('open');
+      }
+    }
+
+    function closeIfOverlay(e) {
+      if (e.target.id === 'aboutOverlay') {
+        toggleAbout(false);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleAbout(false);
+    });
+
+    function typeWriter(elementId, text, speed = 80) {
+      const el = document.getElementById(elementId);
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      typeWriter('nameTitle', 'Muhammed Demir');
+      document.getElementById('games').classList.add('content-enter');
+    });
   </script>
 </body>
 </html>
