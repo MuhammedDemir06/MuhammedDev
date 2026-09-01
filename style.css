@@ -264,7 +264,7 @@ body {
   margin: 0;
 }
 
-/* ================= MOBİLE ================= */
+/* ================= MOBİL UYUM ================= */
 @media (max-width: 768px) {
   body {
     height: auto;
